@@ -1,15 +1,14 @@
-import 'package:av3/create_account.page.dart';
-import 'package:av3/home.page.dart';
+import 'package:av3/modules/home/home.page.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class CreateAccountPage extends StatefulWidget {
+  const CreateAccountPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<CreateAccountPage> createState() => _CreateAccountPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _CreateAccountPageState extends State<CreateAccountPage> {
   @override
   Widget build(BuildContext context) {
     double largura = MediaQuery.of(context).size.width;
@@ -17,6 +16,10 @@ class _LoginPageState extends State<LoginPage> {
 
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Criação de Conta"),
+          centerTitle: true,
+        ),
         body: Container(
           padding: const EdgeInsets.all(16),
           width: largura,
@@ -52,6 +55,18 @@ class _LoginPageState extends State<LoginPage> {
                 const TextField(
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
+                    label: Text("Nome"),
+                    hintText: "Digite seu nome",
+                  ),
+                ),
+                //
+                const SizedBox(
+                  height: 36,
+                ),
+                //
+                const TextField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
                     label: Text("E-mail"),
                     hintText: "Digite seu e-mail",
                   ),
@@ -75,60 +90,33 @@ class _LoginPageState extends State<LoginPage> {
                 //
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const HomePage(),
+                        builder: (context) => const HomePage(),                      
                       ),
                     );
                   },
                   style: ButtonStyle(
-                    fixedSize: WidgetStatePropertyAll(
+                    fixedSize: MaterialStatePropertyAll(
                       Size.fromWidth(
                         largura,
                       ),
                     ),
-                    backgroundColor: const WidgetStatePropertyAll(
-                      Colors.blueAccent,
+                    backgroundColor: const MaterialStatePropertyAll(
+                      Colors.greenAccent,
                     ),
                   ),
                   child: const Text(
-                    "Entrar",
+                    "Criar Conta e Entrar",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                   ),
                 ),
                 //
                 const SizedBox(
                   height: 24,
-                ),
-                //
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const CreateAccountPage(),
-                      ),
-                    );
-                  },
-                  style: ButtonStyle(
-                    fixedSize: WidgetStatePropertyAll(
-                      Size.fromWidth(
-                        largura,
-                      ),
-                    ),
-                    backgroundColor: const WidgetStatePropertyAll(
-                      Colors.deepOrange,
-                    ),
-                  ),
-                  child: const Text(
-                    "Criar Conta",
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
                 ),
                 //
               ],

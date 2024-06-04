@@ -1,14 +1,15 @@
-import 'package:av3/home.page.dart';
+import 'package:av3/modules/authentication/create_account.page.dart';
+import 'package:av3/modules/home/home.page.dart';
 import 'package:flutter/material.dart';
 
-class CreateAccountPage extends StatefulWidget {
-  const CreateAccountPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<CreateAccountPage> createState() => _CreateAccountPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _CreateAccountPageState extends State<CreateAccountPage> {
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     double largura = MediaQuery.of(context).size.width;
@@ -16,10 +17,6 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
 
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Criação de Conta"),
-          centerTitle: true,
-        ),
         body: Container(
           padding: const EdgeInsets.all(16),
           width: largura,
@@ -55,18 +52,6 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 const TextField(
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    label: Text("Nome"),
-                    hintText: "Digite seu nome",
-                  ),
-                ),
-                //
-                const SizedBox(
-                  height: 36,
-                ),
-                //
-                const TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
                     label: Text("E-mail"),
                     hintText: "Digite seu e-mail",
                   ),
@@ -90,33 +75,60 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 //
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushReplacement(
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const HomePage(),                      
+                        builder: (context) => const HomePage(),
                       ),
                     );
                   },
                   style: ButtonStyle(
-                    fixedSize: WidgetStatePropertyAll(
+                    fixedSize: MaterialStatePropertyAll(
                       Size.fromWidth(
                         largura,
                       ),
                     ),
-                    backgroundColor: const WidgetStatePropertyAll(
-                      Colors.greenAccent,
+                    backgroundColor: const MaterialStatePropertyAll(
+                      Colors.blueAccent,
                     ),
                   ),
                   child: const Text(
-                    "Criar Conta e Entrar",
+                    "Entrar",
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Colors.white,
                     ),
                   ),
                 ),
                 //
                 const SizedBox(
                   height: 24,
+                ),
+                //
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const CreateAccountPage(),
+                      ),
+                    );
+                  },
+                  style: ButtonStyle(
+                    fixedSize: MaterialStatePropertyAll(
+                      Size.fromWidth(
+                        largura,
+                      ),
+                    ),
+                    backgroundColor: const MaterialStatePropertyAll(
+                      Colors.deepOrange,
+                    ),
+                  ),
+                  child: const Text(
+                    "Criar Conta",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
                 //
               ],
