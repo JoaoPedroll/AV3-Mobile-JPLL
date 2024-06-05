@@ -1,4 +1,5 @@
 import 'package:av3/modules/authentication/login.page.dart';
+import 'package:av3/modules/home/home.page.dart';
 import 'package:flutter/material.dart';
 
 abstract class RoutersApp{
@@ -9,7 +10,7 @@ abstract class RoutersApp{
 static Map<String, WidgetBuilder> routers ={
   RoutersApp.LOGIN:(context)        => LoginPage(),
   RoutersApp.AUTH:(context)         => Placeholder(),
-  RoutersApp.HOME:(context)         => Placeholder(),
+  RoutersApp.HOME:(context)         => HomePage(),
 };
 
 }

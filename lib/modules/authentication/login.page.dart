@@ -1,6 +1,10 @@
+import 'package:av3/dao/local_storage.dao.dart';
+import 'package:av3/modules/authentication/authentication.controller.dart';
 import 'package:av3/modules/authentication/create_account.page.dart';
 import 'package:av3/modules/home/home.page.dart';
+import 'package:av3/modules/routers/routers.scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,6 +18,15 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     double largura = MediaQuery.of(context).size.width;
     double altura = MediaQuery.of(context).size.height;
+
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _senhaController = TextEditingController();
+
+
+  booleano() async {
+      bool resultado = await AuthController.entrar(_emailController.text, _senhaController.text);
+      return resultado;
+    }
 
     return SafeArea(
       child: Scaffold(
@@ -49,7 +62,8 @@ class _LoginPageState extends State<LoginPage> {
                   height: 36,
                 ),
                 //
-                const TextField(
+                 TextField(
+                  controller: _emailController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     label: Text("E-mail"),
@@ -61,7 +75,8 @@ class _LoginPageState extends State<LoginPage> {
                   height: 36,
                 ),
                 //
-                const TextField(
+                 TextField(
+                  controller: _senhaController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     label: Text("Senha"),
@@ -74,13 +89,26 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 //
                 ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const HomePage(),
-                      ),
-                    );
+                  onPressed: ()async{
+                    if(await booleano()==true){
+                    Navigator.pushReplacementNamed(context, RoutersApp.HOME);
+                    }else{
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              backgroundColor: Colors.amber,
+                              title: Text("Erro"),
+                              content: Text(
+                                "Credenciais inválido",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            );
+                          });
+                    }
+                     
+
+
                   },
                   style: ButtonStyle(
                     fixedSize: MaterialStatePropertyAll(

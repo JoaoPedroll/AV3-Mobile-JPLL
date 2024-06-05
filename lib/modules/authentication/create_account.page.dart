@@ -1,4 +1,7 @@
+import 'package:av3/dao/local_storage.dao.dart';
+import 'package:av3/modules/authentication/authentication.controller.dart';
 import 'package:av3/modules/home/home.page.dart';
+import 'package:av3/modules/routers/routers.scheme.dart';
 import 'package:flutter/material.dart';
 
 class CreateAccountPage extends StatefulWidget {
@@ -13,6 +16,10 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   Widget build(BuildContext context) {
     double largura = MediaQuery.of(context).size.width;
     double altura = MediaQuery.of(context).size.height;
+
+    TextEditingController _nomeController = TextEditingController();
+    TextEditingController _emailController = TextEditingController();
+    TextEditingController _senhaController = TextEditingController();
 
     return SafeArea(
       child: Scaffold(
@@ -52,7 +59,8 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   height: 36,
                 ),
                 //
-                const TextField(
+                TextField(
+                  controller: _nomeController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     label: Text("Nome"),
@@ -64,7 +72,8 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   height: 36,
                 ),
                 //
-                const TextField(
+                TextField(
+                  controller: _emailController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     label: Text("E-mail"),
@@ -76,7 +85,8 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   height: 36,
                 ),
                 //
-                const TextField(
+                TextField(
+                  controller: _senhaController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     label: Text("Senha"),
@@ -90,12 +100,40 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 //
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const HomePage(),                      
-                      ),
-                    );
+                    if (LocalStorage.emailValido(_emailController.text) ==
+                        false) {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              backgroundColor: Colors.amber,
+                              title: Text("Erro"),
+                              content: Text(
+                                "Email inválido",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            );
+                          });
+                    } else if (LocalStorage.senhaValida(
+                            _senhaController.text) ==
+                        false) {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              backgroundColor: Colors.amber,
+                              title: Text("Erro"),
+                              content: Text(
+                                "Senha inválida",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            );
+                          });
+                    } else {
+                      AuthController.createAccount(_nomeController.text,
+                          _emailController.text, _senhaController.text);
+                      Navigator.pushReplacementNamed(context, RoutersApp.HOME);
+                    }
                   },
                   style: ButtonStyle(
                     fixedSize: MaterialStatePropertyAll(

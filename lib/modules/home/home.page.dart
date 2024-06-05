@@ -1,5 +1,7 @@
+import 'package:av3/model/user.model.dart';
 import 'package:av3/modules/authentication/login.page.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -7,6 +9,8 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
+
+
 
 class _HomePageState extends State<HomePage> {
   @override
@@ -40,14 +44,20 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.all(16),
           width: largura,
           height: altura,
-          child: const Column(
+          child:  Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               //
-              Text("NOME DO USUARIO"),
+              FutureBuilder<String>(
+        future: userModel().getUserData('email'),
+        builder: (context, snapshot){
+          return Text("${snapshot.data}",style: TextStyle(color: Colors.black87),);},),
               //
-              Text("EMAIL DO USUÁRIO"),
+              FutureBuilder<String>(
+        future: userModel().getUserData('senha'),
+        builder: (context, snapshot){
+          return Text("${snapshot.data}",style: TextStyle(color: Colors.black87),);},),
               //
               //
               //
